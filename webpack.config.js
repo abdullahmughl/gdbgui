@@ -2,6 +2,10 @@ const path = require("path");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
+  devServer: {
+    host: '0.0.0.0',
+    disableHostCheck: true
+  },
   entry: {
     main: "./gdbgui/src/js/gdbgui.tsx",
     dashboard: "./gdbgui/src/js/dashboard.tsx"

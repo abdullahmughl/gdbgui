@@ -114,11 +114,11 @@ def docs(session):
 
 @nox.session(reuse_venv=True)
 def develop(session):
-    session.install("-e", ".")
+    # session.install("-e", ".")
     session.run("yarn", "install", external=True)
     print("Watching JavaScript file and Python files for changes")
     with subprocess.Popen(["yarn", "start"]):
-        session.run("python", "-m", "gdbgui")
+        session.run("python3", "-m", "gdbgui")
 
 
 @nox.session(reuse_venv=True)
@@ -164,7 +164,7 @@ def publish_docs(session):
 def build_executable_current_platform(session):
     session.run("yarn", "install", external=True)
     session.run("yarn", "build", external=True)
-    session.install(".", "PyInstaller>=4.5, <4.6")
+    session.install(".", "PyInstaller>=4.5, <4.6", external=True)
     session.run("python", "make_executable.py")
     session.notify("build_pex")
 

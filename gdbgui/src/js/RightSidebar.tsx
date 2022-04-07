@@ -20,11 +20,11 @@ import ToolTipTourguide from "./ToolTipTourguide";
 let onmouseup_in_parent_callbacks: any = [],
   onmousemove_in_parent_callbacks: any = [];
 
-let onmouseup_in_parent_callback = function() {
+let onmouseup_in_parent_callback = function () {
   // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'fn' implicitly has an 'any' type.
   onmouseup_in_parent_callbacks.map(fn => fn());
 };
-let onmousemove_in_parent_callback = function(e: any) {
+let onmousemove_in_parent_callback = function (e: any) {
   // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'fn' implicitly has an 'any' type.
   onmousemove_in_parent_callbacks.map(fn => {
     fn(e);
@@ -36,7 +36,7 @@ type OwnCollapserState = any;
 type CollapserState = OwnCollapserState & typeof Collapser.defaultProps;
 
 class Collapser extends React.Component<{}, CollapserState> {
-  static defaultProps = { collapsed: false, id: "" };
+  static defaultProps = { collapsed: false, id: "", title: "" };
   _height_when_clicked: any;
   _page_y_orig: any;
   _resizing: any;
@@ -50,7 +50,7 @@ class Collapser extends React.Component<{}, CollapserState> {
       autosize: true,
       height_px: null, // if an integer, force height to this value
       _mouse_y_click_pos_px: null,
-      _height_when_clicked: null
+      _height_when_clicked: null,
     };
     this.onmousedown_resizer = this.onmousedown_resizer.bind(this);
     this.onmouseup_resizer = this.onmouseup_resizer.bind(this);
@@ -131,12 +131,11 @@ class Collapser extends React.Component<{}, CollapserState> {
     }
 
     return (
-      <div className="collapser">
+      <div className="collapser" >
         <div className="pointer titlebar" onClick={this.toggle_visibility.bind(this)}>
           <span
-            className={`glyphicon glyphicon-chevron-${
-              this.state.collapsed ? "right" : "down"
-            }`}
+            className={`glyphicon glyphicon-chevron-${this.state.collapsed ? "right" : "down"
+              }`}
             style={{ marginRight: "6px" }}
           />
           {/* @ts-expect-error ts-migrate(2339) FIXME: Property 'title' does not exist on type 'Readonly<... Remove this comment to see the full error message */}
@@ -163,12 +162,12 @@ class Collapser extends React.Component<{}, CollapserState> {
 class RightSidebar extends React.Component {
   render() {
     let input_style = {
-        display: "inline",
-        width: "100px",
-        padding: "6px 6px",
-        height: "25px",
-        fontSize: "1em"
-      },
+      display: "inline",
+      width: "100px",
+      padding: "6px 6px",
+      height: "25px",
+      fontSize: "1em"
+    },
       mi_output = "";
     // @ts-expect-error ts-migrate(2339) FIXME: Property 'debug' does not exist on type 'Readonly<... Remove this comment to see the full error message
     if (this.props.debug) {
@@ -214,52 +213,21 @@ class RightSidebar extends React.Component {
         />
 
         {/* @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message */}
-        <Collapser title="threads" content={<Threads />} />
+        <Collapser title="call stack" content={<Threads />} />
 
         {/* @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message */}
         <Collapser id="locals" title="local variables" content={<Locals />} />
         {/* @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message */}
         <Collapser id="expressions" title="expressions" content={<Expressions />} />
-        <Collapser
-          // @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message
-          title="Tree"
-          content={
-            <div>
-              <input
-                id="tree_width"
-                className="form-control"
-                placeholder="width (px)"
-                style={input_style}
-              />
-              <input
-                id="tree_height"
-                className="form-control"
-                placeholder="height (px)"
-                style={input_style}
-              />
-              <div id={constants.tree_component_id} />
-            </div>
-          }
-        />
-        {/* @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message */}
-        <Collapser id="memory" title="memory" content={<Memory />} />
+
         {/* @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message */}
         <Collapser title="breakpoints" content={<Breakpoints />} />
-        <Collapser
-          // @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message
-          title="signals"
-          // @ts-expect-error ts-migrate(2322) FIXME: Property 'signals' does not exist on type 'Intrins... Remove this comment to see the full error message
-          content={<InferiorProgramInfo signals={this.props.signals} />}
-        />
-        {/* @ts-expect-error ts-migrate(2322) FIXME: Property 'title' does not exist on type 'Intrinsic... Remove this comment to see the full error message */}
-        <Collapser title="registers" collapsed={true} content={<Registers />} />
+
 
         {mi_output}
       </div>
     );
   }
-  componentDidMount() {
-    Tree.init();
-  }
+
 }
 export default RightSidebar;
